@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #importacion de vistas genericas de django
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, UpdateView
 
 #Importando Modelos
 from django.db import models
@@ -17,7 +17,7 @@ from django.urls import reverse_lazy
 #VIsta encargada de listar las categorias existentes
 class ListGenreView(ListView):
     model = Genre
-    template_name = 'core/genre_list.html'
+    template_name = 'core/genre/genre_list.html'
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)        
@@ -38,7 +38,7 @@ class ListGenreView(ListView):
         context['object_list_with_fields'] = [
             {
                 'data': {field.name: getattr(genre, field.name) for field in model_fields if isinstance(field, models.Field)},
-                # 'editar_url': reverse_lazy('category_update', kwargs={'pk': category.pk}),
+                'editar_url': reverse_lazy('genre_update', kwargs={'pk': genre.pk}),
                 # 'eliminar_url': reverse_lazy('category_delete', kwargs={'pk': category.pk}),
             } 
             for genre in context['object_list']
@@ -49,15 +49,30 @@ class ListGenreView(ListView):
 #Vista encargada de la creación de nuevos géneros
 class GenreRegisterView(FormView):
     form_class = GenreForm
-    template_name = 'core/genre_form.html'
+    template_name = 'core/genre/genre_form.html'
     success_url = reverse_lazy('genre')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Registro de géneros'
+        context['action'] = 'Registrar'
         context['reverse_url'] = reverse_lazy('genre')
         return context
 
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+    
+#Vista encargada de la modificacion de genero ya creados
+class GenreUpdateView(UpdateView):
+    model = Genre
+    form_class = GenreForm
+    template_name = 'core/genre/genre_update.html'
+    success_url = reverse_lazy('genre')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar generos'
+        context['action'] = 'Editar'
+        context['reverse_url'] = reverse_lazy('genre')
+        return context
