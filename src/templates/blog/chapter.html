@@ -19,6 +19,18 @@
                 <div class="barraProgreso" style="width: 0%; background-color: red; height: 10px; cursor: pointer;">
                 </div>
             </div>
+            <div class="flex items-center justify-around">
+
+                {% if previus_chapter %}
+                    <a href="{% url 'info_chapter' slug=previus_chapter.chapter_slug %}" class="text-white">Capitulo anterior</a>
+                {% endif %}
+
+                <a href="#" class="text-white">Info Serie</a>
+
+                {% if next_chapter %}
+                    <a href="{% url 'info_chapter' slug=next_chapter.chapter_slug %}" class="text-white">Capitulo siguiente</a>
+                {% endif %}
+            </div>
         </div>
         <div class="col-span-3">
             <p class="text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet sunt cum atque

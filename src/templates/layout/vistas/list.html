@@ -1,0 +1,43 @@
+{% extends "blog/base.html" %}
+
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+
+<div class="flex flex-col items-center justify-center container mx-auto">
+    <h1 class="text-white">{{ title }}</h1>
+
+    <!-- tabla de visualización de datos -->
+    <table>
+        <!-- encabezados de la tabla -->
+        <thead>
+            <tr>
+                {% for name in header_names %}
+                    <th class="text-white">{{ name }}</th>
+                {% endfor %}
+                <th class="text-white">Acciones</th>
+            </tr>
+        </thead>
+        <!-- visualización de datos  -->
+        <tbody>
+            {% for item in object_list_with_fields %}
+                <tr>
+                    {% for value in item.data.values %}
+                        <td class="text-white">{{ value }}</td>
+                    {% endfor %}
+                    <td>
+                        <!-- pendiente creacion de vistas editar y eliminar  -->
+                        <!-- <a href="{{ item.editar_url }}"><span class="material-symbols-outlined">edit_square</span></a>
+                        <a href="{{ item.eliminar_url }}"><span class="material-symbols-outlined">delete</span></a> -->
+                        <a href="#"><span class="text-white"><span class="material-symbols-outlined">edit_square</span></span></a>
+                        <a href="#"><span class="text-white"><span class="material-symbols-outlined">delete</span></span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- pendiente creacion de vista para ingresar registros -->
+    <!-- <a href="{{ create_url }}"><span class="material-symbols-outlined">add</span> Crear nuevo registro</a> -->
+    <a href="{{ create_url }}" class="text-white"><span class="material-symbols-outlined">add</span> Crear nuevo registro</a>
+</div>
+
+{% endblock content %}
