@@ -1,0 +1,39 @@
+<header class="py-3 border-b-2 border-[#00eeff] mb-3">
+    <nav class="flex justify-between items-center w-[92%] mx-auto">
+        <div class="text-2xl text-white transition duration-500 ease-in-out hover:border-b-4 hover:border-[#00eeff] hover:rounded-2xl hover:text-[#00eeff]">
+            <a href="{% url 'home' %}">FENRIR</a>
+        </div>
+        <div class="nav-links bg-black md:static absolute md:min-h-fit min-h-[60vh] left-0  top-[-100%] md:w-auto w-full flex items-center px-5">
+            <ul class="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+                <li class="text-[#929ca0] transition duration-500 ease-in-out hover:border-b-4 hover:border-[#00eeff] hover:rounded-2xl hover:text-[#00eeff]">
+                    <a href="#">Directorio</a>
+                </li>
+                <li class="text-[#929ca0] transition duration-500 ease-in-out hover:border-b-4 hover:border-[#00eeff] hover:rounded-2xl hover:text-[#00eeff]">
+                    <a href="#">Géneros</a>
+                </li>
+                <li class="text-[#929ca0] transition duration-500 ease-in-out hover:border-b-4 hover:border-[#00eeff] hover:rounded-2xl hover:text-[#00eeff]">
+                    <a href="#">Buscar</a>
+                </li>
+            </ul>
+        </div>
+        <div class="flex items-center gap-6">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-[#2cd4d9] text-white px-5 py-2 rounded-full hover:bg-violet-300" ><strong>logout</strong></button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="bg-[#2cd4d9] text-white px-5 py-2 rounded-full hover:bg-violet-300">Login</a>
+            {% endif %}
+            <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl text-white cursor-pointer md:hidden"></ion-icon>
+        </div>
+    </nav>
+</header>
+
+<script>
+    const navLinks = document.querySelector('.nav-links')
+    function onToggleMenu(e){
+        e.name = e.name === 'menu' ? 'close' : 'menu'
+        navLinks.classList.toggle('top-[9%]')
+    }
+</script>

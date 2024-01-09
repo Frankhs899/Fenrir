@@ -1,0 +1,27 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Fenrir flv{% endblock title %}
+
+{% block content %}
+
+<div class="flex items-center justify-center container mx-auto">
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 py-3 px-3">
+
+        <!-- tarjeta -->
+        {% for serie in series %}
+            <a href="{% url 'info_serie' slug=serie.serie_slug %}" class="border-2 border-[#00eeff] rounded-xl shadow-lg text-white">
+                <div class="p-5 flex flex-col">
+                    <div class="rounded-xl overflow-hidden">
+                        <img src="{{ serie.serie_image_file.url }}" alt="{{ serie.serie_title }}">
+                    </div>
+                    <h5 class="text-center text-xs md:text-sm mt-3"> {{ serie.serie_title }} </h5>
+                </div>                
+            </a>
+        {% endfor %}
+        <!-- fin tarjerta -->
+        
+    </div>
+</div>
+
+
+{% endblock content %}

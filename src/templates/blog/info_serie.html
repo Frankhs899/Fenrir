@@ -1,0 +1,75 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Fenrir flv{% endblock title %}
+
+{% block content %}
+    <div class="flex flex-col items-center justify-center container mx-auto">
+        <div class="grid grid-cols-12 gap-4 py-3 px-3 border-2 border-[#00eeff] rounded-3xl">
+            <div class="col-span-3">
+                <div class="p-5 flex flex-col">
+                    <img src="{{ infoserie.serie_image_file.url }}" alt="" class="rounded-2xl">
+                </div>
+            </div>
+            <div class="col-span-9">
+                <div class="p-5 flex flex-col">
+                    <h1 class="text-white text-2xl font-medium">{{ infoserie.serie_title }}</h1>
+                    <br>
+                    <p class="text-white text-md">
+                        {{ infoserie.serie_synopsis }}
+                    </p>
+                    <br>
+                    <div class="grid grid-cols-12">
+                        <div class="col-span-6">
+                            <ul>
+                                <li class="grid grid-cols-2 text-white">
+                                    <span class="text-white">Tipo: </span>
+                                    <span class="text-white">{{ infoserie.serie_type }}</span>                                   
+                                </li>
+                                <li class="grid grid-cols-2 text-white">
+                                    <span class="text-white">Géneros: </span>
+                                    <span class="text-white">
+                                        {% if infoserie.serie_genre.all %}
+                                            {% for genre in infoserie.serie_genre.all %}
+                                                {{ genre.genre_name }}
+                                                {% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            Sin géneros
+                                        {% endif %}
+                                    </span>                                   
+                                </li>
+                                <li class="grid grid-cols-2 text-white">
+                                    <span class="text-white">Idioma: </span>
+                                    <span class="text-white">{{ infoserie.serie_language }}</span>                                   
+                                </li>
+                                <li class="grid grid-cols-2 text-white">
+                                    <span class="text-white">Fecha de emision: </span>
+                                    <span class="text-white">{{ infoserie.serie_date_of_issue }}</span>                                   
+                                </li>
+                                <li class="grid grid-cols-2 text-white">
+                                    <span class="text-white">Estado: </span>
+                                    <span class="text-white">{{ infoserie.serie_status }}</span>                                   
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-span-6 flex items-center justify-center h-auto">
+                            <h1 class="text-white text-center">Espacio para trailer</h1>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <h1 class="text-white">LISTA DE CAPITULOS</h1>
+            <Ul>
+                {% for chapter in chapters %}
+                    <li>
+                        <a href="{% url 'info_chapter' slug=chapter.chapter_slug %}" class="text-white">{{ chapter }}</a>
+                    </li>
+                {% endfor %}
+            </Ul>
+        </div>
+    </div>
+{% endblock content %}
