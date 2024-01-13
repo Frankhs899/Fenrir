@@ -6,15 +6,16 @@
 
 <section>
     <div class="w-[100%] flex flex-col items-center justify-center container mx-auto lg:grid lg:grid-cols-12 py-3 px-3">
+        <!-- hero con carrusel y ultimas peliculas  -->
         <div class="flex flex-col items-center justify-center container mx-auto lg:col-span-8">
             <div class="w-[100%] flex flex-col items-center justify-center container mx-auto">
                 <!-- carrusel -->
                 <div class="w-[100%] max-h-[427px] md:max-h-[397px] overflow-hidden py-1 px-1 mb-3">
                     {% include "img.html" %}
                 </div>
-                <!-- ultimos series  -->
+                <!-- ultimas peliculas  -->
                 <div class="w-[100%] hidden lg:grid grid-cols-4 gap-2 py-1 px-1 ">
-                    {% for serie in series %}
+                    {% for serie in series|slice:":8" %}
 
                         <a href="{% url 'info_serie' slug=serie.serie_slug %}" class="border-2 border-[#00eeff] rounded-xl shadow-lg text-white">
                             <div class="p-2 flex flex-col">
@@ -26,9 +27,36 @@
 
                     {% endfor %}
                 </div>
+                <!-- fin ultimas peliculas  -->
             </div>
         </div>
-        <div class="flex flex-col items-center justify-center container mx-auto lg:col-span-4"></div>
+        <!-- fin hero con carrusel y ultimas peliculas  -->
+        <!-- ultimos capitulos agregados -->
+        <div class="flex flex-col items-center justify-center container px-2 py-2 mx-auto lg:col-span-4">
+            <h1 class="text-white text-center">ULTIMOS CAPITULOS AGREGADOS</h1>
+            <div class="flex flex-col items-center min-w-[100%]">
+                {% for chapter in chapters|slice:":10" %}
+                    <div class="grid grid-cols-4 min-w-[100%] max-h-28 overflow-hidden px-1 py-1">
+                        <!-- contenedor imagen miniatura -->
+                        <div class="col-span-1 max-h-[104px] overflow-hidden">
+                            <div class=" w-[100%] flex items-center justify-center max-h-[104px] overflow-hidden">
+                                <img src="{{ chapter.chapter_title.serie_image_file.url }}" alt="{{ chapter.chapter_title }} " class="max-h-[104px] min-w-[100%]">
+                            </div>
+                        </div>
+                        <!-- fin contenedor imagen miniatura -->
+                        <!-- contenedor enlace -->
+                        <div class="col-span-3 w-[100%]">
+                            <div class="flex items-center justify-center h-[100%]">
+                                <a href="{% url 'info_chapter' slug=chapter.chapter_slug %}" class="text-white text-center">{{ chapter.chapter_title }} {{ chapter.chapter_number }}</a>
+                            </div>
+                        </div>
+                        <!-- fin contenedor enlace -->
+                        
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- ultimos capitulos agregados -->
 
     </div>
 </section>

@@ -12,7 +12,8 @@ class HomeView(View):
 
     def get(self, request):
         data = {
-            'series': Series.objects.all()
+            'series': Series.objects.all(),
+            'chapters': Chapters.objects.all(),
         }
         return render(request, self.template_name, data)
     
