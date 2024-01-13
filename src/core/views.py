@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #importacion de vistas genericas de django
-from django.views.generic import ListView, FormView, UpdateView
+from django.views.generic import ListView, FormView, UpdateView, DeleteView
 
 #Importando Modelos
 from django.db import models
@@ -39,7 +39,7 @@ class ListGenreView(ListView):
             {
                 'data': {field.name: getattr(genre, field.name) for field in model_fields if isinstance(field, models.Field)},
                 'editar_url': reverse_lazy('genre_update', kwargs={'pk': genre.pk}),
-                # 'eliminar_url': reverse_lazy('category_delete', kwargs={'pk': category.pk}),
+                'eliminar_url': reverse_lazy('genre_delete', kwargs={'pk': genre.pk}),
             } 
             for genre in context['object_list']
         ]
@@ -75,4 +75,15 @@ class GenreUpdateView(UpdateView):
         context['title'] = 'Editar generos'
         context['action'] = 'Editar'
         context['reverse_url'] = reverse_lazy('genre')
+        return context
+
+class GenreDeleteView(DeleteView):
+    model = Genre
+    template_name = 'core/genre/genre_delete.html'
+    success_url = reverse_lazy('genre')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Eliminar género'
+        context['action'] = 'Eliminar'
         return context

@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <h1>{{title}}</h1>
+    
+    <form action="" method="post" >
+    
+        {% csrf_token %}
+        {% comment %} validacion del formulario {% endcomment %}
+        {% if form.errors %}
+            <h5>Alerta a ocurrido el siguiente error:</h5>
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% comment %} fin de la validacion  {% endcomment %}
+
+        <h1 class="text-white">Está seguro de eliminar este registro:{{ object.name }}</h1>
+
+        <input type="submit" value="{{ action }}" class="text-white">
+    </form>
+    
+{% endblock content %}

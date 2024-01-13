@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import DetailView
 
+
 from core.models import Series, Chapters
 
 # Create your views here.
@@ -26,16 +27,17 @@ class InfoSerieView(DetailView):
         context = super().get_context_data(**kwargs)
         series = self.get_object()
         chapters = series.chapters_set.all()  # Obtiene todos los capítulos asociados a la serie
-        print(chapters)
         context['chapters'] = chapters
         return context
 
+
 class InfoChapterView(DetailView):
+    # template_name = 'video.html'
     template_name = 'blog/chapter.html'
     model = Chapters
     slug_field = 'chapter_slug'
     context_object_name = 'chapter'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)        
         # Obtener el capítulo actual
@@ -60,3 +62,4 @@ class InfoChapterView(DetailView):
             context['previus_chapter'] = previus_chapter
 
         return context
+

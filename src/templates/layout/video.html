@@ -1,7 +1,4 @@
 {% load static %}
 
-<video src="{% static 'video/vid1.mp4' %}" width="880" controls="controls" preload="auto" class="rounded-2xl"></video>
-<div class="barraProgresoContainer" style="width: 100%; background-color: white; height: 10px;">
-    <div class="barraProgreso" style="width: 0%; background-color: red; height: 10px; cursor: pointer;">
-    </div>
-</div>
+<video src="{% get_media_prefix %}{{ chapter.chapter_video }}" id="miVideo" width="880" controls="controls" preload="auto" muted class="rounded-2xl mt-3">
+</video>

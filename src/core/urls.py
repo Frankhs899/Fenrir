@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import ListGenreView, GenreRegisterView, GenreUpdateView
+#Vistas relacionadas a generos
+from .views import ListGenreView, GenreRegisterView, GenreUpdateView, GenreDeleteView
 
 urlpatterns = [
     #Urls lista o visualizacion de datos modelos
@@ -10,5 +11,8 @@ urlpatterns = [
 
     #Urls Modificar registros
     path('genre/update/<int:pk>/', GenreUpdateView.as_view(), name='genre_update'),
+
+    #Urls Borrar registros
+    path('genre/delete/<int:pk>/', GenreDeleteView.as_view(), name='genre_delete'),
 
 ]

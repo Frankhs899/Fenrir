@@ -1,6 +1,6 @@
 {% extends "blog/base.html" %}
 
-{% block title %}Fenrir flv{% endblock title %}
+{% block title %}{{ chapter.chapter_title }}{% endblock title %}
 
 {% block content %}
 
@@ -12,14 +12,9 @@
     <div class="grid grid-cols-12 mt-3 py-4 px-4 border-2 border-[#00eeff] rounded-3xl">
         <div class="col-span-9">
 
-            <video src="{{ chapter.chapter_video.url }}" width="880" controls="controls" preload="auto"
-                class="rounded-2xl">
-            </video>
-            <div class="barraProgresoContainer" style="width: 100%; background-color: black; height: 10px; display: none;">
-                <div class="barraProgreso" style="width: 0%; background-color: red; height: 10px; cursor: pointer;">
-                </div>
-            </div>
-            <div class="flex items-center justify-around">
+            <video id="miVideo" src="{{ chapter.chapter_video.url }}" width="880" controls="controls" preload="auto" class="rounded-2xl"></video>
+
+            <div class="flex items-center justify-around">                
 
                 {% if previus_chapter %}
                     <a href="{% url 'info_chapter' slug=previus_chapter.chapter_slug %}" class="text-white">Capitulo anterior</a>
@@ -39,23 +34,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    var video = document.querySelector('video');
-    var barraProgreso = document.querySelector('.barraProgreso');
-    var barraProgresoContainer = document.querySelector('.barraProgresoContainer');
-
-    video.addEventListener('timeupdate', function () {
-        var porcentaje = (video.currentTime / video.duration) * 100;
-        barraProgreso.style.width = porcentaje + '%';
-    });
-
-    barraProgresoContainer.addEventListener('click', function (e) {
-        var posicionClick = e.clientX - this.offsetLeft;
-        var anchoBarra = this.offsetWidth;
-        var porcentaje = (posicionClick / anchoBarra) * 100;
-        video.currentTime = (porcentaje / 100) * video.duration;
-    });
-</script>
-
 {% endblock content %}

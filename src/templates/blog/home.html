@@ -4,24 +4,33 @@
 
 {% block content %}
 
-<div class="flex items-center justify-center container mx-auto">
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 py-3 px-3">
+<section>
+    <div class="w-[100%] flex flex-col items-center justify-center container mx-auto lg:grid lg:grid-cols-12 py-3 px-3">
+        <div class="flex flex-col items-center justify-center container mx-auto lg:col-span-8">
+            <div class="w-[100%] flex flex-col items-center justify-center container mx-auto">
+                <!-- carrusel -->
+                <div class="w-[100%] max-h-[427px] md:max-h-[397px] overflow-hidden py-1 px-1 mb-3">
+                    {% include "img.html" %}
+                </div>
+                <!-- ultimos series  -->
+                <div class="w-[100%] hidden lg:grid grid-cols-4 gap-2 py-1 px-1 ">
+                    {% for serie in series %}
 
-        <!-- tarjeta -->
-        {% for serie in series %}
-            <a href="{% url 'info_serie' slug=serie.serie_slug %}" class="border-2 border-[#00eeff] rounded-xl shadow-lg text-white">
-                <div class="p-5 flex flex-col">
-                    <div class="rounded-xl overflow-hidden">
-                        <img src="{{ serie.serie_image_file.url }}" alt="{{ serie.serie_title }}">
-                    </div>
-                    <h5 class="text-center text-xs md:text-sm mt-3"> {{ serie.serie_title }} </h5>
-                </div>                
-            </a>
-        {% endfor %}
-        <!-- fin tarjerta -->
-        
+                        <a href="{% url 'info_serie' slug=serie.serie_slug %}" class="border-2 border-[#00eeff] rounded-xl shadow-lg text-white">
+                            <div class="p-2 flex flex-col">
+                                <div class="rounded-xl overflow-hidden">
+                                    <img src="{{ serie.serie_image_file.url }}" alt="{{ serie.serie_title }}">
+                                </div>                                
+                            </div>
+                        </a>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col items-center justify-center container mx-auto lg:col-span-4"></div>
+
     </div>
-</div>
-
+</section>
 
 {% endblock content %}
