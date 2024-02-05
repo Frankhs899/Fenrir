@@ -1,37 +1,90 @@
 {% extends "blog/base.html" %}
+{% load static %}
 
 {% block title %}{{ chapter.chapter_title }}{% endblock title %}
 
 {% block content %}
 
-<div class="flex flex-col items-center justify-center container mx-auto">
-    <div>
-        <h1 class="font-bold text-2xl text-white">{{ chapter.chapter_title }} capitulo {{ chapter.chapter_number }}</h1>
-    </div>
-
-    <div class="grid grid-cols-12 mt-3 py-4 px-4 border-2 border-[#00eeff] rounded-3xl">
-        <div class="col-span-9">
-
-            <video id="miVideo" src="{{ chapter.chapter_video.url }}" width="880" controls="controls" preload="auto" class="rounded-2xl"></video>
-
-            <div class="flex items-center justify-around">                
-
-                {% if previus_chapter %}
-                    <a href="{% url 'info_chapter' slug=previus_chapter.chapter_slug %}" class="text-white">Capitulo anterior</a>
+<div class="flex flex-col w-[95%] gap-4 mx-auto px-4 py-4 md:px-8 lg:grid lg:grid-cols-12">
+    <!-- video  -->
+    <div class="flex flex-col items-center container lg:col-span-8 gap-4">
+        <div class="w-full">
+            <h1 class="font-bold text-xs text-center md:text-lg">{{ chapter.chapter_title }} capitulo {{ chapter.chapter_number }}</h1>
+        </div>
+        <div class="flex flex-col gap-4">
+            <div id="videoContainer" class="w-full relative">
+                <div id="controles" class="w-[90%] h-20 hidden items-center justify-around mx-auto absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div class="relative w-1/2 h-full cursor-pointer z-10">
+                        <img src="{% static 'img/replay_30.svg' %}" alt="" class="w-20 h-20 mx-auto hover:rotate-45">
+                        <!-- {% include "rp.html" %} -->
+                    </div>
+                    <div class="w-1/2 h-full">
+                        <img src="{% static 'img/forward_30.svg' %}" alt="" class="w-20 h-20 mx-auto">
+                        <!-- {% include "fw.html" %} -->
+                    </div>
+                </div>
+                <video autoplay id="animeVideo" controls="controls" preload="auto" class="rounded-2xl">
+                    <source src="{{ chapter.chapter_video.url }}" type="video/mp4">
+                </video>
+            </div>
+            <div class="flex items-center justify-around container bg-[#00eeff] text-black rounded-lg">
+                {% if previus_chapter %}                
+                    <a href="{% url 'info_chapter' slug=previus_chapter.chapter_slug %}" class="material-symbols-outlined">
+                        skip_previous
+                    </a>
+                {% else %}
+                    <a href="{% url 'info_serie' slug=chapter.chapter_title.serie_slug %}" class="material-symbols-outlined">
+                        skip_previous
+                    </a>
                 {% endif %}
 
-                <a href="#" class="text-white">Info Serie</a>
-
+                    <a href="{% url 'info_serie' slug=chapter.chapter_title.serie_slug %}" class="material-symbols-outlined">
+                        movie_info
+                    </a>
+                    
                 {% if next_chapter %}
-                    <a href="{% url 'info_chapter' slug=next_chapter.chapter_slug %}" class="text-white">Capitulo siguiente</a>
+                    <a href="{% url 'info_chapter' slug=next_chapter.chapter_slug %}" class="material-symbols-outlined" id="nextChapterLink">
+                        skip_next
+                    </a>
+                {% else %}
+                    <span class="material-symbols-outlined">
+                        link_off
+                    </span>
                 {% endif %}
             </div>
         </div>
-        <div class="col-span-3">
-            <p class="text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet sunt cum atque
-                perspiciatis iure cupiditate deserunt veritatis, vitae hic assumenda doloremque porro nihil tempore
-                obcaecati accusamus, ex dignissimos quidem consequuntur.</p>
+    </div>
+    <!-- fin video  -->
+    <!-- lista  -->
+    <div class="container lg:col-span-4">
+        <div class="flex flex-col items-center justify-between container gap-4 lg:min-h-full">
+
+            <h1 class="text-[#00eeff] font-semibold">LISTA DE CAPITULOS</h1>
+            
+            {% for chapter in chapters %}
+                <a href="{% url 'info_chapter' slug=chapter.chapter_slug %}" class="container text-center rounded-lg hover:bg-[#00eeff] hover:text-black">{{ chapter.chapter_title }} capitulo {{ chapter.chapter_number }}</a>
+            {% endfor %}
         </div>
     </div>
+    <!-- fin lista  -->
 </div>
+
 {% endblock content %}
+{% block script %}
+<script>
+    const videoContainer = document.getElementById('videoContainer');
+    const controles = document.getElementById('controles');
+
+    function displayControls(){
+        controles.classList.replace('hidden', 'flex');
+    }
+
+    function hiddenControls(){
+        controles.classList.replace('flex', 'hidden');
+    }
+
+    videoContainer.addEventListener('mouseover', displayControls);
+    videoContainer.addEventListener('mouseout', hiddenControls);
+
+</script>
+{% endblock script %}

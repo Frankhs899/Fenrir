@@ -1,0 +1,57 @@
+<section class="text-white px-3 md:px-6 lg:px-16">
+    <div class="flex flex-col items-center justify-center container gap-2 mx-auto lg:grid lg:grid-cols-12 py-3 px-3">
+        <!-- parte izquierda -->
+        <div class="flex flex-col container mx-auto lg:col-span-8 lg:min-h-full">
+            <div class="flex flex-col container gap-5 mx-auto">
+                <div class="flex items-center justify-center container max-h-[427px] md:max-h-[397px] rounded-3xl overflow-hidden">
+                    {% for serie in series|slice:":1" %}
+                        <img src="{{ serie.serie_image_file.url }}" alt="{{ serie.serie_title }}" class="w-full">
+                    {% endfor %}
+                </div>
+                <div class="hidden lg:flex flex-col border-2 border-[#00eeff] rounded-3xl py-3 px-3 gap-4">
+                    <div class="flex items-center justify-center">
+                        <h1>PELICULAS RECIENTEMENTE AGREGADAS</h1>
+                    </div>
+                    <div class="container grid grid-cols-4 gap-2 py-1 px-1">
+                        {% for serie in series|slice:":8" %}
+                            <a href="{% url 'info_serie' slug=serie.serie_slug %}" class="border-2 border-[#00eeff] rounded-xl">
+                                <div class="p-2 flex flex-col">
+                                    <div class="rounded-xl overflow-hidden">
+                                        <img src="{{ serie.serie_image_file.url }}" alt="{{ serie.serie_title }}">
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-center">{{ serie.serie_title }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- fin parte izquierda -->
+        <!-- parte derecha -->
+        <div class="flex flex-col items-center justify-center container mx-auto lg:col-span-4 border-2 border-[#00eeff] rounded-2xl px-1 py-1">
+            <div class="container"><h1 class="text-center">ULTIMOS CAPITULOS AGREGADOS</h1></div>
+            <div class="container px-1 py-1">
+                {% for chapter in chapters|slice:":10" %}
+                <a href="{% url 'info_chapter' slug=chapter.chapter_slug %}" class="grid grid-cols-6 border-2 border-[#00eeff] rounded-xl px-1 py-1 my-2 overflow-hidden">
+                    <div class="col-span-2 rounded-xl overflow-hidden">
+                        <div class="flex items-center justify-center container max-h-20">
+                            <img src="{{ chapter.chapter_title.serie_image_file.url }}" alt="{{ chapter.chapter_title }} " class="">
+                        </div>
+                        
+                    </div>
+                    <div class="col-span-4">
+                        <div class="flex items-center justify-center min-h-full">
+                            <p class="text-center text-xs md:text-base lg:text-base">{{ chapter.chapter_title }} {{ chapter.chapter_number }}</p>
+                        </div>
+                        
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- fin parte derecha -->
+    </div>
+</section>

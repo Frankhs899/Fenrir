@@ -1,0 +1,41 @@
+<header class="flex items-center justify-center lg:border-b-2 lg:border-[#00eeff] xl:text-xl 2xl:text-3xl ">
+    <nav class="px-2 py-2 md:px-4 md:py-4 lg:flex lg:items-center lg:justify-between container 2xl:min-w-full">
+        <div class="flex items-center border-b-2 border-[#00eeff] pb-1 justify-between lg:justify-center lg:border-none lg:pb-0 ">
+            <div class="px-1 py-1 rounded-lg cursor-pointer hover:bg-[#00eeff] hover:text-black"><a href="{% url 'home' %}">FENRIR FLV</a></div>            
+            <div id="burguer" onclick="hiddenItems()" class="lg:hidden px-1 py-1 cursor-pointer hover:text-[#00eeff]"><div class="flex items-center justify-center"><span class="material-symbols-outlined">menu</span></div></div>
+        </div>
+        <div id="redirection" class="hidden lg:flex lg:items-center lg:justify-between">
+            <div class="py-1 px-1 cursor-pointer hover:bg-[#00eeff] hover:text-black lg:hover:rounded-lg lg:mx-3"><a href="{% url 'directorio' %}">Directorio</a></div>
+            <div class="py-1 px-1 cursor-pointer hover:bg-[#00eeff] hover:text-black lg:hover:rounded-lg lg:mx-3"><a href="#">Géneros</a></div>
+            <div class="py-1 px-1 cursor-pointer hover:bg-[#00eeff] hover:text-black lg:hover:rounded-lg lg:mx-3"><a href="#">Buscar</a></div>
+        </div>
+        <div id="accounts" class="hidden lg:flex items-center justify-between py-1">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="border-2 border-[#00eeff] rounded-lg px-2 py-1 text-[#00eeff] hover:bg-[#00eeff] hover:text-white ">logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="border-2 border-[#00eeff] rounded-lg px-2 py-1 text-[#00eeff] hover:bg-[#00eeff] hover:text-white lg:mr-3 ">login</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<script>
+    var burguer = document.getElementById('burguer');
+    var redirection = document.getElementById('redirection');
+    var accounts = document.getElementById('accounts');
+
+    function hiddenItems(){
+        if(redirection.classList.contains('hidden') && accounts.classList.contains('hidden')){
+            redirection.classList.remove('hidden');
+            accounts.classList.remove('hidden');
+            accounts.classList.add('flex');
+        } else{
+            redirection.classList.add('hidden');
+            accounts.classList.remove('flex');
+            accounts.classList.add('hidden');
+        };
+    };
+</script>

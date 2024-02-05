@@ -25,3 +25,157 @@
 
 
 {% endblock content %}
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/fenrir.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body class="font-[Poppins] bg-black text-white h-screen">
+    <div class="min-h-screen flex flex-col justify-center">
+        <div class="min-w-[50%] bg-gray-900 mx-auto max-w-md py-8 px-10 shadow rounded-lg border-solid border-4 border-[#2cd4d9]">
+            <form action="" method="post" >
+                {% csrf_token %}
+                <div class=" mb-4">
+                    <input class="appearance-none block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none" type="text"placeholder='Nombre de usuario' name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+                </div>
+                <div class=" mb-4">
+                    <input class="appearance-none block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none" type="password" placeholder='Contraseña' name="password" autocomplete="current-password" required id="id_password">
+                </div>
+                <div class="mb-4">
+                    <input class="inline-block w-full px-8 py-4 leading-none text-white bg-indigo-600 hover:bg-indigo-700 font-semibold rounded shadow" type="submit">
+                </div>
+                <div class="mb-4">
+                    <p><a href="#" class="text-indigo-600">Olvido su contraseña?</a></p>
+                    <p>No tiene cuenta? <a href="#" class="text-indigo-600">Registrarse</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
+
+<div class="flex flex-col items-center justify-center container mx-auto">
+    <div>
+        <h1 class="font-bold text-2xl text-white">{{ chapter.chapter_title }} capitulo {{ chapter.chapter_number }}</h1>
+    </div>
+
+    <div class="grid grid-cols-12 mt-3 py-4 px-4 border-2 border-[#00eeff] rounded-3xl">
+        <div class="col-span-9">
+
+            <video id="miVideo" src="{{ chapter.chapter_video.url }}" width="880" controls="controls" preload="auto" class="rounded-2xl"></video>
+
+            <div class="flex items-center justify-around">                
+
+                {% if previus_chapter %}
+                    <a href="{% url 'info_chapter' slug=previus_chapter.chapter_slug %}" class="text-white">Capitulo anterior</a>
+                {% endif %}
+
+                <a href="#" class="text-white">Info Serie</a>
+
+                {% if next_chapter %}
+                    <a href="{% url 'info_chapter' slug=next_chapter.chapter_slug %}" class="text-white">Capitulo siguiente</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-span-3">
+            <p class="text-white">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Amet sunt cum atque
+                perspiciatis iure cupiditate deserunt veritatis, vitae hic assumenda doloremque porro nihil tempore
+                obcaecati accusamus, ex dignissimos quidem consequuntur.</p>
+        </div>
+    </div>
+</div>
+
+{% extends "blog/base.html" %}
+
+{% block title %} {{ title }} {% endblock title %}
+{% block content %}
+
+<div class="flex flex-col items-center justify-center container mx-auto">
+    <h1 class="text-white">{{ title }}</h1>
+
+    <!-- tabla de visualización de datos -->
+    <table>
+        <!-- encabezados de la tabla -->
+        <thead>
+            <tr>
+                {% for name in header_names %}
+                    <th class="text-white">{{ name }}</th>
+                {% endfor %}
+                <th class="text-white">Acciones</th>
+            </tr>
+        </thead>
+        <!-- visualización de datos  -->
+        <tbody>
+            {% for item in object_list_with_fields %}
+                <tr>
+                    {% for value in item.data.values %}
+                        <td class="text-white">{{ value }}</td>
+                    {% endfor %}
+                    <td>
+                        <a href="#"><span class="text-white"><span class="material-symbols-outlined">edit_square</span></span></a>
+                        <a href="#"><span class="text-white"><span class="material-symbols-outlined">delete</span></span></a>
+                    </td>
+                    <!-- <td>
+                        <a href="{{ item.editar_url }}"><span class="text-white"><span class="material-symbols-outlined">edit_square</span></span></a>
+                        <a href="{{ item.eliminar_url }}"><span class="text-white"><span class="material-symbols-outlined">delete</span></span></a>
+                    </td> -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ create_url }}" class="text-white"><span class="material-symbols-outlined">add</span> Crear nuevo registro</a>
+</div>
+
+{% endblock content %}
+
+{% extends "blog/base.html" %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+
+<div class="w-[95%] mx-auto py-3 flex flex-col items-center justify-center overflow-x-scroll">
+    <h1>{{ title }}</h1>
+    <div>
+        <a href="{{ create_url }}" class="text-white"><span class="material-symbols-outlined">add</span> Crear nuevo registro</a>
+    </div>
+    <table class="border-collapse border-2 border-[#00eeff]">
+        <!-- encabezados -->
+        <thead class="overflow-hidden bg-[#00eeff] text-black py-3 ">
+            <tr class="min-h-[28px] max-h-[40px]">
+                {% for name in header_names %}
+                    <th class="min-h-7 max-h-10 border-black">{{ name }}</th>
+                {% endfor %}
+                <th class="min-h-7 max-h-10 border border-black">Acciones</th>
+            </tr>
+        </thead>
+        <!-- vizualizacion de datos -->
+        <tbody>
+            {% for item in object_list_with_fields %}
+                <tr>
+                    {% for value in item.data.values %}
+                        <td class="border border-[#00eeff]">{{ value }}</td>
+                    {%  endfor %}
+                    <td>
+                        <a href="#"><span class="text-white"><span class="material-symbols-outlined">edit_square</span></span></a>
+                        <a href="#"><span class="text-white"><span class="material-symbols-outlined">delete</span></span></a>
+                    </td>
+                </tr>
+            {%  endfor %}
+        </tbody>
+    </table>
+    <div>
+        <a href="{{ create_url }}" class="text-white"><span class="material-symbols-outlined">add</span> Crear nuevo registro</a>
+    </div>
+</div>
+
+{% endblock content %}

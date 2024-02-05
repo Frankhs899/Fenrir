@@ -17,6 +17,15 @@ class HomeView(View):
         }
         return render(request, self.template_name, data)
     
+class DirectoryView(View):
+    template_name = 'blog/directory.html'
+
+    def get(self, request):
+        data = {
+            'series': Series.objects.all(),
+        }
+        return render(request, self.template_name, data)
+    
 
 class InfoSerieView(DetailView):
     template_name = 'blog/info_serie.html'
@@ -45,7 +54,7 @@ class InfoChapterView(DetailView):
         current_chapter = self.get_object()
         context['current_chapter'] = current_chapter        
         # Obtener la serie asociada al capítulo actual
-        series = current_chapter.chapter_title        
+        series = current_chapter.chapter_title
         # Obtener todos los capítulos asociados a la serie
         chapters = series.chapters_set.all()
         context['chapters'] = chapters
@@ -61,6 +70,5 @@ class InfoChapterView(DetailView):
             previus_index = current_index + 1
             previus_chapter = chapters[previus_index]
             context['previus_chapter'] = previus_chapter
-
         return context
 

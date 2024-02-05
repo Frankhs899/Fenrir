@@ -9,27 +9,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
-<body class="font-[Poppins] bg-gray-900">
-    <div class="min-h-screen flex flex-col justify-center">
-        <div class="min-w-[50%] bg-gray-900 mx-auto max-w-md py-8 px-10 shadow rounded-lg border-solid border-4 border-[#2cd4d9]">
-            <form action="" method="post" >
-                {% csrf_token %}
-                <div class=" mb-4">
-                    <input class="appearance-none block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none" type="text"placeholder='Nombre de usuario' name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
-                </div>
-                <div class=" mb-4">
-                    <input class="appearance-none block w-full px-4 py-3 leading-tight text-gray-700 bg-gray-50 focus:bg-white border border-gray-200 focus:border-gray-500 rounded focus:outline-none" type="password" placeholder='Contraseña' name="password" autocomplete="current-password" required id="id_password">
-                </div>
-                <div class="mb-4">
-                    <input class="inline-block w-full px-8 py-4 leading-none text-white bg-indigo-600 hover:bg-indigo-700 font-semibold rounded shadow" type="submit">
-                </div>
-                <div class="mb-4">
-                    <p><a href="#" class="text-indigo-600">Olvido su contraseña?</a></p>
-                    <p>No tiene cuenta? <a href="#" class="text-indigo-600">Registrarse</a></p>
-                </div>
-            </form>
-        </div>
-    </div>
+<body class="font-[Poppins] bg-black text-white h-screen flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center container px-3 py-3 gap-4 lg:px-24">
+        <h1 class="font-black text-[#00eeff]">Inicio de sesion</h1>
+        <form action="" method="post" class="flex flex-col gap-4 items-center container border-2 border-[#00eeff] rounded-xl py-3 px-4">
+            {% csrf_token %}
+            <div class="flex flex-col container">
+                <p><label for="" class="font-bold">Usuario:</label></p>
+                <input class="px-2 border-2 border-[#00eeff] rounded-xl bg-black text-white " type="text" placeholder='Nombre de usuario' name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+            </div>
 
+            <div class="flex flex-col container">
+                <p><label for="" class="font-bold">Contraseña:</label></p>
+                <input class="px-2 border-2 border-[#00eeff] rounded-xl bg-black text-white" type="password" placeholder='password' name="password" autocomplete="current-password" required id="id_password">
+            </div>
+
+            <div class="flex items-center justify-around container">
+
+                <div>
+                    <a href="{% url 'home' %}" class="border-2 border-[#00eeff] rounded-lg px-2 py-1 text-[#00eeff]">Cancelar</a>
+                </div>
+
+                <div>
+                    <input type="submit" value="Ingresar" class="border-2 border-[#00eeff] rounded-lg px-2 py-1  bg-[#00eeff] text-black font-semibold">
+                </div>
+
+            </div>
+        </form>
+    </div>
 </body>
 </html>

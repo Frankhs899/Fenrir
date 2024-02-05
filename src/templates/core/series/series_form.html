@@ -1,0 +1,43 @@
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+<div class="w-[95%] mx-auto">
+    <h1 class="font-bold text-center">{{ title }}</h1>
+    <form action="" method="post" class="w-[95%] mx-auto flex flex-col gap-4 items-center border-2 border-[#00eeff] rounded-xl py-3 px-4" >
+        {% csrf_token %} 
+        <div class="w-[95%] mx-auto ">
+            <p><label for="" class="font-bold">Nombre de la serie:</label></p>
+            {{ form.serie_title }}
+        </div>
+        <div class="w-[95%] mx-auto">
+            <p><label for="" class="font-bold">Descripción de la serie:</label></p>
+            {{ form.serie_synopsis }}
+        </div>
+        <div >
+            <p><label for="" class="font-bold">Géneros:</label></p>
+            {{ form.serie_genre }}
+        </div>
+        <div class="w-[95%] mx-auto ">
+            <p><label for="" class="font-bold">Idioma:</label></p>
+            {{ form.serie_language }}
+        </div>
+        <div>
+            {{ form.serie_type.label_tag }} {{ form.serie_type }}
+        </div>
+        <div>
+            {{ form.serie_date_of_issue.label_tag }} {{ form.serie_date_of_issue }}
+        </div>
+        <div>
+            {{ form.serie_status.label_tag }} {{ form.serie_status }}
+        </div>
+        <div>
+            {{ form.serie_image_file.label_tag }} {{ form.serie_image_file }}
+        </div>
+        <input type="submit" value="{{ action }}" class="text-white">
+    </form>
+    <a href="{{ reverse_url }}" class="text-white">
+        Volver
+    </a>
+</div>
+{% endblock content %}

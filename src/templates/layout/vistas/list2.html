@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+
+{% block title %} {{ title }} {% endblock title %}
+
+{% block content %}
+
+<div class="w-[95%] mx-auto py-3">
+    <table class="border-collapse border-2 border-[#00eeff]">
+        <thead class="w-auto">
+            <tr class="w-auto">
+                <th class="px-2 bg-[#00eeff] text-sm text-black border-2 border-black">Id</th>
+                <th class="min-w-[400px] px-2 bg-[#00eeff] text-black border-2 border-black">Titulo</th>
+                <th class="px-2 min-w-96 bg-[#00eeff] text-black border-2 border-black">Sinopsis</th>
+                <th class="px-2 min-w-40 bg-[#00eeff] text-black border-2 border-black">genero</th>
+                <th class="px-2 bg-[#00eeff] text-black border-2 border-black">Idioma</th>
+                <th class="px-2 bg-[#00eeff] text-black border-2 border-black">Tipo</th>
+                <th class="px-2 bg-[#00eeff] text-black border-2 border-black">Fecha emision</th>
+                <th class="px-2 bg-[#00eeff] text-black border-2 border-black">Fecha creacion</th>
+                <th class="px-2 bg-[#00eeff] text-black border-2 border-black">Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for serie in series %}
+                <tr>
+                    <td class="border-2 border-[#00eeff]">{{ serie.id }}</td>
+                    <td class="border-2 border-[#00eeff]">{{ serie.serie_title }}</td>
+                    <td class="border-2 border-[#00eeff]">{{ serie.serie_synopsis }}</td>
+                    <td class="border-2 border-[#00eeff]">{{ serie.serie_genre }}</td>
+                    <td class="text-nowrap border-2 border-[#00eeff]">{{ serie.serie_language }}</td>
+                    <td class="border-2 border-[#00eeff]">{{ serie.serie_type }}</td>
+                    <td class="text-nowrap border-2 border-[#00eeff]">{{ serie.serie_date_of_issue }}</td>
+                    <td class="text-nowrap border-2 border-[#00eeff]">{{ serie.serie_upload_date }}</td>
+                    <td class="text-nowrap border-2 border-[#00eeff]">{{ serie.serie_status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>    
+
+{% endblock content %}
